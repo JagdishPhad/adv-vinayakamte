@@ -172,6 +172,7 @@ export interface FAQSectionProps extends BaseSectionProps {
 export interface ContactSectionProps {
   selectedService: string | null;
   onNavigate?: NavigateHandler;
+  onShowToast?: (message: string, type: 'success' | 'error') => void;
 }
 
 /**

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { useScrollEffect } from '../hooks/useScrollEffect';
+import { useScrollSpy } from '../../hooks/useScrollSpy';
 import { NAV_ITEMS } from '../../data/content';
 
 interface NavbarProps {
@@ -10,6 +11,11 @@ interface NavbarProps {
 export function Navbar({ onNavigate }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isScrolled = useScrollEffect(50);
+  const activeSection = useScrollSpy({
+    sectionIds: NAV_ITEMS.map(item => item.id),
+    threshold: 0.3,
+    rootMargin: '-80px 0px -80% 0px'
+  });
 
   const handleNav = (id: string) => {
     onNavigate(id);
@@ -40,19 +46,27 @@ export function Navbar({ onNavigate }: NavbarProps) {
             {/* Desktop Navigation */}
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-8">
-                {NAV_ITEMS.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => handleNav(item.id)}
-                    className={`px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
-                      isScrolled
-                        ? 'text-gray-700 hover:text-black focus-visible:ring-black'
-                        : 'text-white hover:text-gray-200 focus-visible:ring-white'
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                ))}
+                {NAV_ITEMS.map((item) => {
+                  const isActive = activeSection === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => handleNav(item.id)}
+                      className={`px-3 py-2 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 relative ${
+                        isActive
+                          ? isScrolled
+                            ? 'text-black font-bold border-b-2 border-black'
+                            : 'text-white font-bold border-b-2 border-white'
+                          : isScrolled
+                          ? 'text-gray-700 hover:text-black focus-visible:ring-black'
+                          : 'text-white hover:text-gray-200 focus-visible:ring-white'
+                      }`}
+                      aria-current={isActive ? 'true' : undefined}
+                    >
+                      {item.label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -78,15 +92,23 @@ export function Navbar({ onNavigate }: NavbarProps) {
         {isMenuOpen && (
           <div className="md:hidden bg-white border-t shadow-lg">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {NAV_ITEMS.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => handleNav(item.id)}
-                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-black hover:bg-gray-50 w-full text-left rounded-md"
-                >
-                  {item.label}
-                </button>
-              ))}
+              {NAV_ITEMS.map((item) => {
+                const isActive = activeSection === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => handleNav(item.id)}
+                    className={`block px-3 py-2 text-base font-medium w-full text-left rounded-md transition-colors ${
+                      isActive
+                        ? 'text-black font-bold bg-gray-50'
+                        : 'text-gray-700 hover:text-black hover:bg-gray-50'
+                    }`}
+                    aria-current={isActive ? 'true' : undefined}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}

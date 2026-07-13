@@ -6,9 +6,10 @@ import { sendEmail } from '../../utils/email';
 
 interface ContactSectionProps {
   selectedService: string | null;
+  onShowToast?: (message: string, type: 'success' | 'error') => void;
 }
 
-export function ContactSection({ selectedService }: ContactSectionProps) {
+export function ContactSection({ selectedService, onShowToast }: ContactSectionProps) {
   const [form, setForm] = useState<FormData>({
     name: '',
     email: '',
@@ -35,9 +36,20 @@ export function ContactSection({ selectedService }: ContactSectionProps) {
       await sendEmail(form, selectedService);
       setSent(true);
       setForm({ name: '', email: '', phone: '', matter: '', message: '' });
+      
+      // Show success toast
+      if (onShowToast) {
+        onShowToast('✅ Message sent successfully! Advocate Amte\'s chambers will contact you soon.', 'success');
+      }
     } catch (err) {
-      setError(CONTACT_CONTENT.form.errorMessage);
+      const errorMessage = CONTACT_CONTENT.form.errorMessage;
+      setError(errorMessage);
       console.error('EmailJS Error:', err);
+      
+      // Show error toast
+      if (onShowToast) {
+        onShowToast(`❌ ${errorMessage}`, 'error');
+      }
     } finally {
       setSending(false);
     }

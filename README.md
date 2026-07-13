@@ -1,6 +1,6 @@
 # Advocate Vinayak Amte - Professional Website
 
-**Live Demo:** [www.advocatevinayakamte.com](https://www.advocatevinayakamte.com)
+**Live Demo:** [adv-vinayakamte.vercel.app](https://adv-vinayakamte.vercel.app)
 
 A modern, production-grade React application for Advocate Vinayak Amte, a qualified Trademark Attorney (B.COM, GDCA, LLB, LLM) specializing in intellectual property protection, trademark registration, and brand security services in Mumbai, India.
 
@@ -403,7 +403,7 @@ Expert Trademark Attorney in Mumbai
 - 📞 Phone: [+91 9320848100](tel:+919320848100) | [+91 9221848100](tel:+919221848100)
 - 📧 Email: [vinayakamte@yahoo.com](mailto:vinayakamte@yahoo.com)
 - 📍 Address: DL AHUJA & ASSOCIATES, 23, Western India House, 3rd Floor, 17 Sir P.M. Road, Fort, Mumbai - 400001
-- 🌐 Website: [www.advocatevinayakamte.com](https://www.advocatevinayakamte.com)
+- 🌐 Website: [adv-vinayakamte.vercel.app](https://adv-vinayakamte.vercel.app)
 
 ---
 
