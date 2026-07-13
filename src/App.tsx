@@ -28,6 +28,15 @@ function App() {
   const [currentSection, setCurrentSection] = useState(getCurrentSection());
   const [showNotFound, setShowNotFound] = useState(false);
 
+  // Check pathname on initial load for direct URL access
+  useEffect(() => {
+    const pathname = window.location.pathname;
+    // If pathname is not root and doesn't match valid routes, show 404
+    if (pathname !== '/' && pathname !== '') {
+      setShowNotFound(true);
+    }
+  }, []);
+
   const handleNavigate = useCallback((id: string, service?: string) => {
     // Validate section ID
     if (!VALID_SECTIONS.includes(id)) {
